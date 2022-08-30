@@ -14,14 +14,21 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
       ));
     });
 
-    //upodate task
+    //update task
     on<UpdateTaskEvent>((event, emit) {
-      emit(const TasksState());
+      final int index = state.allTasks.indexOf(event.task);
+
+      List<Task> alltasks = List.from(state.allTasks)..remove(event.task);
+      event.task.isDone == false
+          ? alltasks.insert(index, event.task.copyWith(isDone: true))
+          : alltasks.insert(index, event.task.copyWith(isDone: false));
+      emit(TasksState(allTasks: alltasks));
     });
 
     //delete task
     on<DeleteTaskEvent>((event, emit) {
-      emit(const TasksState());
+      List<Task> alltasks = List.from(state.allTasks)..remove(event.task);
+      emit(TasksState(allTasks: alltasks));
     });
   }
 }
