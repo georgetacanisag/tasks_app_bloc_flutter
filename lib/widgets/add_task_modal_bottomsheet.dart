@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tasks_app_bloc_flutter/utils/id_auto_generator.dart';
 
 import '../blocs/bloc_exports.dart';
 import '../models/task.dart';
@@ -41,10 +42,10 @@ class AddTaskModalBottom extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                var task = Task(title: titleController.text);
-                context
-                    .read<TasksBloc>()
-                    .add(AddTaskEvent(task: Task(title: task.title)));
+                var task =
+                    Task(title: titleController.text, id: GUIDGen.generate());
+                context.read<TasksBloc>().add(
+                    AddTaskEvent(task: Task(title: task.title, id: task.id)));
                 Navigator.pop(context);
               },
               child: const Text("Add"),
