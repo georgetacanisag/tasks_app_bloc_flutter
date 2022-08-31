@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tasks_app_bloc_flutter/models/task.dart';
+import 'package:tasks_app_bloc_flutter/widgets/app_drawer.dart';
 import 'package:tasks_app_bloc_flutter/widgets/tasks_list.dart';
 
 import '../blocs/bloc_exports.dart';
@@ -38,6 +39,7 @@ class TasksScreen extends StatelessWidget {
               )
             ],
           ),
+          drawer: const AppDrawer(),
           body: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
