@@ -10,7 +10,7 @@ class TaskTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: const Icon(Icons.star),
+      leading: const Icon(Icons.star_border_outlined),
       title: Text(
         task.title,
         style: TextStyle(

@@ -9,6 +9,8 @@ import '../widgets/add_task_modalbottom.dart';
 class TasksScreen extends StatelessWidget {
   const TasksScreen({Key? key}) : super(key: key);
 
+  static const id = "task_screen";
+
   void _addTask(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -50,7 +52,7 @@ class TasksScreen extends StatelessWidget {
                   ),
                   child: Center(
                     child: Chip(
-                      backgroundColor: Colors.blue,
+                      backgroundColor: Colors.grey,
                       padding: const EdgeInsets.symmetric(
                           vertical: 5, horizontal: 20),
                       label: Text(
