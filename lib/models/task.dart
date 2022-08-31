@@ -1,6 +1,4 @@
-import 'package:equatable/equatable.dart';
-
-class Task extends Equatable {
+class Task {
   final String title;
   final String id;
   bool? isDone;
