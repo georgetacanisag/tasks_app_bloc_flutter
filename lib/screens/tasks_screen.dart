@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:tasks_app_bloc_flutter/models/task.dart';
+import 'package:tasks_app_bloc_flutter/widgets/app_drawer.dart';
 import 'package:tasks_app_bloc_flutter/widgets/tasks_list.dart';
 
 import '../blocs/bloc_exports.dart';
-import '../widgets/add_task_modal_bottomsheet.dart';
+import '../widgets/add_task_modalbottom.dart';
 
 class TasksScreen extends StatelessWidget {
   const TasksScreen({Key? key}) : super(key: key);
+
+  static const id = "task_screen";
 
   void _addTask(BuildContext context) {
     showModalBottomSheet(
@@ -38,21 +41,22 @@ class TasksScreen extends StatelessWidget {
               )
             ],
           ),
+          drawer: const AppDrawer(),
           body: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const Padding(
-                  padding: EdgeInsets.symmetric(
+                Padding(
+                  padding: const EdgeInsets.symmetric(
                     vertical: 20,
                   ),
                   child: Center(
                     child: Chip(
-                      backgroundColor: Colors.blue,
-                      padding:
-                          EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                      backgroundColor: Colors.grey,
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 5, horizontal: 20),
                       label: Text(
-                        'Tasks:',
+                        '${state.allTasks.length} tasks',
                       ),
                     ),
                   ),
