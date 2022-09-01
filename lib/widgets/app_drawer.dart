@@ -4,8 +4,15 @@ import 'package:tasks_app_bloc_flutter/screens/tasks_screen.dart';
 
 import '../blocs/bloc_exports.dart';
 
-class AppDrawer extends StatelessWidget {
+class AppDrawer extends StatefulWidget {
   const AppDrawer({Key? key}) : super(key: key);
+
+  @override
+  State<AppDrawer> createState() => _AppDrawerState();
+}
+
+class _AppDrawerState extends State<AppDrawer> {
+  bool switchValue = false;
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +36,8 @@ class AppDrawer extends StatelessWidget {
             BlocBuilder<TasksBloc, TasksState>(
               builder: (context, state) {
                 return GestureDetector(
-                  onTap: (() =>
-                      Navigator.of(context).pushNamed(TasksScreen.id)),
+                  onTap: (() => Navigator.of(context)
+                      .pushReplacementNamed(TasksScreen.id)),
                   child: ListTile(
                     leading: const Icon(Icons.folder_special),
                     title: const Text("My Tasks"),
@@ -43,8 +50,8 @@ class AppDrawer extends StatelessWidget {
             BlocBuilder<TasksBloc, TasksState>(
               builder: (context, state) {
                 return GestureDetector(
-                  onTap: (() =>
-                      Navigator.of(context).pushNamed(RecycleBinScreen.id)),
+                  onTap: (() => Navigator.of(context)
+                      .pushReplacementNamed(RecycleBinScreen.id)),
                   child: ListTile(
                     leading: const Icon(Icons.delete),
                     title: const Text("Bin"),
@@ -52,7 +59,23 @@ class AppDrawer extends StatelessWidget {
                   ),
                 );
               },
-            )
+            ),
+            const Divider(),
+            const SizedBox(
+              height: 40,
+            ),
+            ListTile(
+              leading: const Icon(Icons.settings),
+              title: const Text("Change App Theme"),
+              trailing: Switch(
+                value: switchValue,
+                onChanged: (newValue) {
+                  setState(() {
+                    switchValue = newValue;
+                  });
+                },
+              ),
+            ),
           ],
         ),
       ),
