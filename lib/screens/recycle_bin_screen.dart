@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tasks_app_bloc_flutter/widgets/app_drawer.dart';
 
+import '../blocs/bloc_exports.dart';
 import '../widgets/tasks_list.dart';
 
 class RecycleBinScreen extends StatelessWidget {
@@ -10,39 +11,44 @@ class RecycleBinScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Recycle Bin'),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.add),
-          )
-        ],
-      ),
-      drawer: const AppDrawer(),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: const [
-            Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: 20,
-              ),
-              child: Center(
-                child: Chip(
-                  backgroundColor: Colors.blue,
-                  padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-                  label: Text(
-                    'tasks',
+    return BlocBuilder<TasksBloc, TasksState>(
+      builder: (context, state) {
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('Recycle Bin'),
+            actions: [
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.add),
+              )
+            ],
+          ),
+          drawer: const AppDrawer(),
+          body: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 20,
+                  ),
+                  child: Center(
+                    child: Chip(
+                      backgroundColor: Colors.blue,
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 5, horizontal: 20),
+                      label: Text(
+                        '${state.removedTasks.length} deleted tasks',
+                      ),
+                    ),
                   ),
                 ),
-              ),
+                TasksList(taskList: state.removedTasks),
+              ],
             ),
-            TasksList(taskList: []),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

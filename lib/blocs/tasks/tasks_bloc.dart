@@ -10,9 +10,12 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
   TasksBloc() : super(const TasksState()) {
     //Add task
     on<AddTaskEvent>((event, emit) {
-      emit(TasksState(
-        allTasks: List.from(state.allTasks)..add(event.task),
-      ));
+      emit(
+        TasksState(
+          allTasks: List.from(state.allTasks)..add(event.task),
+          removedTasks: state.removedTasks,
+        ),
+      );
     });
 
     //update task
@@ -23,13 +26,25 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
       event.task.isDone == false
           ? alltasks.insert(index, event.task.copyWith(isDone: true))
           : alltasks.insert(index, event.task.copyWith(isDone: false));
-      emit(TasksState(allTasks: alltasks));
+      emit(TasksState(
+        allTasks: alltasks,
+        removedTasks: state.removedTasks,
+      ));
     });
 
     //delete task
     on<DeleteTaskEvent>((event, emit) {
+      List<Task> removeTasks = List.from(state.removedTasks)
+        ..remove(event.task);
+      emit(TasksState(allTasks: state.allTasks, removedTasks: removeTasks));
+    });
+
+    //Remove task
+    on<RemoveTaskEvent>((event, emit) {
       List<Task> alltasks = List.from(state.allTasks)..remove(event.task);
-      emit(TasksState(allTasks: alltasks));
+      List<Task> removetasks = List.from(state.removedTasks)
+        ..add(event.task.copyWith(isDeleted: true));
+      emit(TasksState(allTasks: alltasks, removedTasks: removetasks));
     });
   }
 
